@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import './listview.dart';
+import './list_data.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,9 +10,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyListView(),
+      home: Scaffold(
+          body: SafeArea(
+              child: ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(),
+                  padding: const EdgeInsets.all(15),
+                  itemCount: dataFromApi.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: Image.network(dataFromApi[index]['url']!),
+                      title: Text(dataFromApi[index]['text']!),
+                      subtitle: Text(dataFromApi[index]['subtitle']!),
+                    );
+                  }))),
     );
   }
 }
